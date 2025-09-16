@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  mongo:
+    image: mongo:7
+    container_name: login_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+  api:
+    build: ./backend
+    container_name: login_api
+    environment:
+      - PORT=4000
+      - MONGO_URI=mongodb://mongo:27017/login_db
+      - JWT_SECRET=${JWT_SECRET:-dev_jwt_secret_change_me}
+      - CLIENT_ORIGIN=http://localhost:5173
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongo
+  web:
+    build: ./frontend
+    container_name: login_web
+    environment:
+      - VITE_API_URL=http://localhost:4000
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+volumes:
+  mongo_data:
