@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Backend - Install
+        working-directory: backend
+        run: npm ci
+
+      - name: Backend - Build
+        working-directory: backend
+        run: npm run build
+
+      - name: Frontend - Install
+        working-directory: frontend
+        run: npm ci
+
+      - name: Frontend - Build
+        working-directory: frontend
+        run: npm run build
