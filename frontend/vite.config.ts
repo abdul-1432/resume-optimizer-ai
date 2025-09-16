@@ -1,10 +1,12 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server: {
-    host: '0.0.0.0',
+  // This base can be overridden during CI build step with --base option.
+  base: '/',
+})
     port: 5173
   }
 });
