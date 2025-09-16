@@ -1,0 +1,98 @@
+{
+  "info": {
+    "name": "Login API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {"method": "GET", "url": "{{API_BASE}}/health"}
+    },
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "url": "{{API_BASE}}/api/auth/register",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "url": "{{API_BASE}}/api/auth/login",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Me",
+      "request": {
+        "method": "GET",
+        "url": "{{API_BASE}}/api/auth/me",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{TOKEN}}"}
+        ]
+      }
+    },
+    {
+      "name": "Users - Get My Profile",
+      "request": {
+        "method": "GET",
+        "url": "{{API_BASE}}/api/users/me",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{TOKEN}}"}
+        ]
+      }
+    },
+    {
+      "name": "Users - Update My Profile",
+      "request": {
+        "method": "PATCH",
+        "url": "{{API_BASE}}/api/users/me",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{TOKEN}}"},
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {"mode": "raw", "raw": "{\n  \"name\": \"New Name\"\n}"}
+      }
+    },
+    {
+      "name": "Users - Update Password",
+      "request": {
+        "method": "PATCH",
+        "url": "{{API_BASE}}/api/users/me/password",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{TOKEN}}"},
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {"mode": "raw", "raw": "{\n  \"currentPassword\": \"password123\",\n  \"newPassword\": \"newpassword456\"\n}"}
+      }
+    },
+    {
+      "name": "Users - Upload Avatar",
+      "request": {
+        "method": "POST",
+        "url": "{{API_BASE}}/api/users/me/avatar",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{TOKEN}}"}
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {"key": "API_BASE", "value": "http://localhost:4000"},
+    {"key": "TOKEN", "value": ""}
+  ]
+}

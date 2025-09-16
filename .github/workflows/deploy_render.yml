@@ -1,0 +1,22 @@
+name: Deploy to Render (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      backend_deploy_hook:
+        description: 'Render deploy hook URL for backend (login-api)'
+        required: true
+      frontend_deploy_hook:
+        description: 'Render deploy hook URL for frontend (login-web)'
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger backend deploy
+        run: |
+          curl -fsSL -X POST "${{ github.event.inputs.backend_deploy_hook }}"
+      - name: Trigger frontend deploy
+        run: |
+          curl -fsSL -X POST "${{ github.event.inputs.frontend_deploy_hook }}"

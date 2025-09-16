@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: login-api
+    env: docker
+    plan: free
+    rootDir: backend
+    dockerfilePath: Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 4000
+      - key: MONGO_URI
+        sync: false # set in Render dashboard (e.g., mongodb+srv://...)
+      - key: JWT_SECRET
+        sync: false # set in Render dashboard to a long random string
+      - key: CLIENT_ORIGIN
+        value: https://YOUR-RENDER-FRONTEND.onrender.com
+  - type: static_site
+    name: login-web
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+    envVars:
+      - key: VITE_API_URL
+        value: https://YOUR-RENDER-BACKEND.onrender.com
