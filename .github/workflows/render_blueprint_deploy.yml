@@ -1,0 +1,26 @@
+name: Render Blueprint Deploy
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+    paths:
+      - 'render.yaml'
+      - '.github/workflows/render_blueprint_deploy.yml'
+
+jobs:
+  deploy:
+    # Only run if the secrets are present
+    if: ${{ secrets.RENDER_API_KEY != '' && secrets.RENDER_BLUEPRINT_ID != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render blueprint deploy
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          BLUEPRINT_ID: ${{ secrets.RENDER_BLUEPRINT_ID }}
+        run: |
+          echo "Triggering Render blueprint deploy for $BLUEPRINT_ID"
+          curl -fsS -X POST "https://api.render.com/v1/blueprints/$BLUEPRINT_ID/deploys" \
+            -H "Authorization: Bearer $RENDER_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{}'
