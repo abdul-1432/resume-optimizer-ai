@@ -15,16 +15,4 @@ services:
       - key: JWT_SECRET
         sync: false # set in Render dashboard to a long random string
       - key: CLIENT_ORIGIN
-        value: https://YOUR-RENDER-FRONTEND.onrender.com
-  - type: static_site
-    name: login-web
-    rootDir: frontend
-    buildCommand: npm ci && npm run build
-    staticPublishPath: dist
-    headers:
-      - path: /*
-        name: Cache-Control
-        value: public, max-age=0, must-revalidate
-    envVars:
-      - key: VITE_API_URL
-        value: https://YOUR-RENDER-BACKEND.onrender.com
+        value: https://abdul-1432.github.io/resume-optimizer-ai/
